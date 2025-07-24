@@ -16,4 +16,5 @@ urlpatterns=[
     path('get_session_messages/<uuid:session_id>/', views.get_session_messages, name='get_session_messages'),
     path('create_chat_session/', views.create_chat_session, name='create_chat_session'),
     path('delete_chat_session/<uuid:session_id>/', views.delete_chat_session, name='delete_chat_session'),
+    path('guest-input/', views.guest_input, name='guest_input'),
 ]

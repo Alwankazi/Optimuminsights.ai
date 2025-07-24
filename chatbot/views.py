@@ -53,7 +53,9 @@ def chatbot_view(request):
     return render(request, 'chatbot.html')
 
 def home_view(request):
-    return redirect('chatbot:chatbot')
+    if request.user.is_authenticated:
+        return redirect('chatbot:chatbot')
+    return render(request, 'landing.html')
 
 @login_required
 @csrf_exempt
@@ -245,3 +247,11 @@ def generate_bot_response(message):
         return "If this is a medical emergency, please call emergency services immediately at 911."
     else:
         return "I understand. How else can I assist you?"
+    
+def guest_input(request):
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('chatbot:login')
+        # If user is authenticated, redirect to chat page (unlikely to reach here due to home_view)
+        return redirect('chatbot:chatbot')
+    return redirect('chatbot:home')
