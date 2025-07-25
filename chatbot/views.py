@@ -203,7 +203,8 @@ def get_session_messages(request, session_id):
         except Exception as e:
             return JsonResponse({
                 'status': 'error',
-                'message': str(e)
+                'message': str(e),
+                'created_at': msg.created_at.isoformat()
             }, status=500)
     return JsonResponse({
         'status': 'error',

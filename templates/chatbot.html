@@ -1,14 +1,80 @@
-{% extends 'base_without_navs.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% load widget_tweaks %}
 
-{% block title %}MediBot{% endblock %}
+{% block title %}Optimum Insights Chatbot{% endblock %}
 
 {% block content %}
-<body class="bg-gray-50">
+<style>
+    #sidebar{
+    z-index: 0;
+    display: block;
+    }
+    /* Hide scrollbar when not needed */
+    .hide-scrollbar {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+    /* Ensure scrollability when content overflows */
+    .chat-container {
+        overflow-y: auto;
+    }
+    /* Sidebar collapsed styles */
+    #sidebar[data-collapsed="true"] .logo-text {
+        display: none;
+    }
+    #sidebar[data-collapsed="true"] .logo-icon {
+        margin-left: 8px;
+    }
+    #sidebar[data-collapsed="true"] #sessionList {
+        display: none;
+    }
+    #sidebar[data-collapsed="true"] .p-4 {
+        padding: 8px;
+    }
+    #sidebar[data-collapsed="true"] .button-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+    /* Ensure bottom section stays at bottom */
+    #sidebar {
+        /* display: flex; */
+        flex-direction: column;
+    }
+    #sidebar .p-4.border-t {
+        margin-top: auto;
+    }
+
+    @media screen and (max-width:1400px) {
+        .mobileChatCont{
+        margin-left: 10%;
+        margin-right: 1%;
+    }
+    }
+
+    @media screen and (max-width:600px) {
+        .mobileChatCont{
+        margin-left: 15%;
+        margin-right: 1%;
+    }
+    }
+
+    .min-h-screen {
+    min-height: 100%;
+    }
+
+    #mainContent{
+    height: calc(100vh - 135px);
+    }
+    
+</style>
+
     <div class="min-h-screen flex">
         <!-- Sidebar -->
-        <div id="sidebar" class="w-64 bg-white border-r shadow-lg fixed top-0 left-0 h-full overflow-y-auto transition-all duration-300 z-[60] flex flex-col" data-collapsed="false">
+        <div id="sidebar" class="w-64 bg-white border-r shadow-lg fixed top-10 left-0 h-full overflow-y-auto transition-all duration-300 z-[60] flex flex-col" data-collapsed="false">
             <!-- Session List (Middle, Scrollable) -->
             <div class="flex-1 p-4 overflow-y-auto" id="sessionList" style="margin-top: 60px;">
                 <!-- Sessions will be populated here by JavaScript -->
@@ -16,12 +82,6 @@
             <!-- Logo and Buttons (Bottom) -->
             <div class="p-4 border-t mt-auto">
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <svg class="h-8 w-8 text-blue-600 logo-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                        </svg>
-                        <span class="ml-2 text-xl font-bold text-gray-900 logo-text">Medi</span>
-                    </div>
                     <div class="flex items-center space-x-2 button-container">
                         <button class="text-gray-500 hover:text-gray-700 bg-gray-100 p-1 rounded" id="newChatBtn">
                             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,35 +100,13 @@
 
         <!-- Main Content -->
         <div id="mainContent" class="flex-1 ml-64 transition-all duration-300">
-            <!-- Navigation -->
-            <nav class="bg-white border-b sticky top-0 z-50">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex items-center">
-                            <h2 class="text-lg font-semibold" id="sessionTitle">Medical Assistant</h2>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <div class="flex items-center space-x-3">
-                                <button class="flex items-center space-x-2 rounded-full bg-gray-200 p-1 hover:bg-gray-300 transition-colors" id="profileBtn">
-                                    <span class="pr-2">{{user.username}}</span>
-                                </button>
-                                <a href="{% url 'chatbot:logout' %}" class="text-gray-600 hover:text-gray-800 transition-colors">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </nav>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="max-w-7xl mx-auto px-4 mobileChatCont lg:px-8 py-8">
                 <div class="bg-white rounded-lg shadow-lg">
                     <div class="p-4 border-b">
                         <div class="flex items-center justify-between">
                             <div>
-                                <h2 class="text-lg font-semibold">Medical Assistant</h2>
+                                <h2 class="text-lg font-semibold">AI Assistant</h2>
                                 <div class="flex items-center mt-1">
                                     <span class="h-2 w-2 rounded-full bg-green-500 mr-2"></span>
                                     <p class="text-sm text-gray-500">Online • Ready to help</p>
@@ -85,11 +123,9 @@
                         <div class="flex gap-2">
                             <input type="text" id="messageInput" placeholder="Type your message..." 
                                 class="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <button class="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2" id="sendBtn">
+                            <button class="OIButton p-3 text-white rounded-lg flex items-center gap-2" id="sendBtn">
                                 <span class="hidden sm:inline">Send</span>
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                                </svg>
+                                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
@@ -98,48 +134,9 @@
         </div>
     </div>
 
-    <style>
-        /* Hide scrollbar when not needed */
-        .hide-scrollbar {
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
-        }
-        /* Ensure scrollability when content overflows */
-        .chat-container {
-            overflow-y: auto;
-        }
-        /* Sidebar collapsed styles */
-        #sidebar[data-collapsed="true"] .logo-text {
-            display: none;
-        }
-        #sidebar[data-collapsed="true"] .logo-icon {
-            margin-left: 8px;
-        }
-        #sidebar[data-collapsed="true"] #sessionList {
-            display: none;
-        }
-        #sidebar[data-collapsed="true"] .p-4 {
-            padding: 8px;
-        }
-        #sidebar[data-collapsed="true"] .button-container {
-            flex-direction: column;
-            gap: 8px;
-        }
-        /* Ensure bottom section stays at bottom */
-        #sidebar {
-            display: flex;
-            flex-direction: column;
-        }
-        #sidebar .p-4.border-t {
-            margin-top: auto;
-        }
-    </style>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="{% static 'assets/js/chat.js' %}"></script>
-</body>
-</html>
+
 {% endblock %}

@@ -1,0 +1,14 @@
+<svg class="absolute inset-0 w-full h-full" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="curve1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="curve2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.06"/>
+    </linearGradient>
+  </defs>
+  <path d="M0,400 Q300,200 600,400 T1200,400 L1200,800 L0,800 Z" fill="url(#curve1)" class="animate-pulse"/>
+  <path d="M0,600 Q400,400 800,600 T1200,600 L1200,800 L0,800 Z" fill="url(#curve2)" class="animate-pulse" style="animation-delay: 2s;"/>
+</svg>
