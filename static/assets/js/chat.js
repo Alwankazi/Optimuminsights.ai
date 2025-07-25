@@ -195,19 +195,30 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to add a session to the sidebar
     function addSessionToSidebar(session) {
         const sessionDiv = document.createElement('div');
-        sessionDiv.className = 'p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex items-center justify-between';
+        sessionDiv.className = 'p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex flex-col items-start justify-between mb-2';
         sessionDiv.dataset.sessionId = session.session_id;
+        // Format the date
+        let createdAt = '';
+        if (session.created_at) {
+            const date = new Date(session.created_at);
+            createdAt = date.toLocaleString([], { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
         sessionDiv.innerHTML = `
-            <span class="text-sm truncate flex-1 pr-2">${session.title}</span>
-            <div class="flex items-center space-x-2">
-                <button class="delete-session-btn text-red-500 hover:text-red-700 p-1 rounded" data-session-id="${session.session_id}" data-session-title="${session.title}">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <div class="flex w-full items-center justify-between">
+                <div class="flex-1 min-w-0">
+                    <span class="text-sm truncate font-medium block">${session.title}</span>
+                    <span class="text-xs text-gray-400 block mt-0.5">${createdAt}</span>
+                </div>
+                <div class="flex items-center space-x-2 ml-2">
+                    <button class="delete-session-btn text-red-500 hover:text-red-700 p-1 rounded" data-session-id="${session.session_id}" data-session-title="${session.title}">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7" />
                     </svg>
-                </button>
-                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7" />
-                </svg>
+                </div>
             </div>
         `;
         // Click session title to load messages
