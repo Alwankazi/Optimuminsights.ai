@@ -242,10 +242,10 @@ def generate_bot_response(message):
     message = message.lower()
     if 'hello' in message:
         return "Hello! How can I help you today?"
-    elif 'appointment' in message:
-        return "Would you like to schedule an appointment? Please let me know your preferred date and time."
-    elif 'emergency' in message:
-        return "If this is a medical emergency, please call emergency services immediately at 911."
+    # elif 'appointment' in message:
+    #     return "Would you like to schedule an appointment? Please let me know your preferred date and time."
+    # elif 'emergency' in message:
+    #     return "If this is a medical emergency, please call emergency services immediately at 911."
     else:
         return "I understand. How else can I assist you?"
     

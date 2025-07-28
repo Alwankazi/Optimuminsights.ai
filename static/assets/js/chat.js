@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const messageDiv = document.createElement('div');
         messageDiv.className = `flex ${isBot ? 'justify-start' : 'justify-end'} mb-4 message-animation`;
         const messageContent = document.createElement('div');
-        messageContent.className = `max-w-xl md:max-w-md p-3 rounded-lg ${isBot ? 'bg-white text-gray-800 shadow-xl' : 'bg-blue-600 text-white'}`;
+        messageContent.className = `max-w-xl md:max-w-md p-3 rounded-lg ${isBot ? 'bg-white text-gray-800 shadow-xl' : 'bg-teal-600 text-white'}`;
         // Parse markdown using marked library
         messageContent.innerHTML = marked.parse(text);
         messageDiv.appendChild(messageContent);
@@ -204,16 +204,14 @@ document.addEventListener('DOMContentLoaded', function () {
             createdAt = date.toLocaleString([], { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
         }
         sessionDiv.innerHTML = `
-            <div class="flex w-full items-center justify-between">
+            <div class="sessionSelect flex w-full items-center justify-between">
                 <div class="flex-1 min-w-0">
                     <span class="text-sm truncate font-medium block">${session.title}</span>
                     <span class="text-xs text-gray-400 block mt-0.5">${createdAt}</span>
                 </div>
                 <div class="flex items-center space-x-2 ml-2">
                     <button class="delete-session-btn text-red-500 hover:text-red-700 p-1 rounded" data-session-id="${session.session_id}" data-session-title="${session.title}">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                        <svg width="15px" height="15px" viewBox="0 0 0.45 0.45" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.028 0.071a0.014 0.014 0 0 0 0 0.028zm0.394 0.028a0.014 0.014 0 0 0 0 -0.028zm-0.394 0h0.394V0.071H0.028z" fill="#71717A"/><path d="M0.183 0.028V0.014zM0.154 0.056H0.141zM0.141 0.085a0.014 0.014 0 0 0 0.028 0zm0.141 0a0.014 0.014 0 0 0 0.028 0zM0.296 0.056h0.014zM0.267 0.014H0.182v0.028h0.085zm-0.085 0a0.045 0.045 0 0 0 -0.03 0.012L0.173 0.046A0.015 0.015 0 0 1 0.182 0.043zm-0.03 0.012a0.045 0.045 0 0 0 -0.011 0.03h0.028A0.015 0.015 0 0 1 0.173 0.046zm-0.011 0.03v0.028h0.028V0.056zm0.169 0.028V0.056H0.281v0.028zm0 -0.028a0.045 0.045 0 0 0 -0.012 -0.03L0.277 0.046a0.015 0.015 0 0 1 0.004 0.01zM0.298 0.026A0.045 0.045 0 0 0 0.267 0.014v0.028a0.015 0.015 0 0 1 0.01 0.005z" fill="#71717A"/><path d="M0.169 0.323a0.014 0.014 0 0 0 0.028 0zM0.197 0.182a0.014 0.014 0 0 0 -0.028 0zm0 0.141V0.182H0.169v0.141z" fill="#71717A"/><path d="M0.254 0.323a0.014 0.014 0 0 0 0.028 0zM0.282 0.182a0.014 0.014 0 0 0 -0.028 0zm0 0.141V0.182H0.254v0.141z" fill="#71717A"/><path d="M0.354 0.396 0.34 0.395zM0.326 0.422V0.408zm-0.201 0V0.408zM0.097 0.397 0.111 0.395zM0.084 0.083a0.014 0.014 0 0 0 -0.028 0.002zm0.31 0.002A0.014 0.014 0 1 0 0.366 0.083zM0.34 0.395a0.015 0.015 0 0 1 -0.005 0.009l0.019 0.021A0.045 0.045 0 0 0 0.367 0.398zM0.335 0.404a0.015 0.015 0 0 1 -0.01 0.004v0.028A0.045 0.045 0 0 0 0.354 0.425zM0.326 0.408H0.124v0.028h0.201zm-0.202 0A0.015 0.015 0 0 1 0.114 0.404L0.095 0.425q0.012 0.011 0.028 0.011zM0.114 0.404A0.015 0.015 0 0 1 0.109 0.395L0.082 0.398a0.045 0.045 0 0 0 0.013 0.028zM0.109 0.395 0.084 0.083 0.056 0.086 0.083 0.398zM0.365 0.083 0.339 0.395 0.367 0.398 0.393 0.086z" fill="#71717A"/></svg>
                     </button>
                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7" />
@@ -222,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
         // Click session title to load messages
-        sessionDiv.querySelector('.truncate').addEventListener('click', () => {
+        sessionDiv.querySelector('.sessionSelect').addEventListener('click', () => {
             currentSessionId = session.session_id;
             localStorage.setItem('currentSessionId', currentSessionId);
             loadSessionMessages(session.session_id, session.title);
@@ -265,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
     async function loadSessionMessages(sessionId, title) {
         currentSessionId = sessionId;
         localStorage.setItem('currentSessionId', currentSessionId); // Save to localStorage
-        sessionTitle.textContent = title || 'Medical Assistant';
+        sessionTitle.textContent = title || 'AI Assistant';
         chatContainer.innerHTML = ''; // Clear chat container
         try {
             const response = await fetch(`/get_session_messages/${sessionId}/`, {
@@ -382,7 +380,7 @@ document.addEventListener('DOMContentLoaded', function () {
         currentSessionId = null;
         localStorage.removeItem('currentSessionId'); // Clear saved session
         chatContainer.innerHTML = '';
-        sessionTitle.textContent = 'Medical Assistant';
+        sessionTitle.textContent = 'AI Assistant';
         document.querySelectorAll('#sessionList > div').forEach(div => {
             div.classList.remove('bg-blue-100');
         });
