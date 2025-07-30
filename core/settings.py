@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-bu^rg_radm7x!+h5e%kznr%l@r&9a#k1aol+29+s8p_qo1o@kj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*','localhost','optimuminsights.ai', '13.234.198.68']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -142,5 +142,5 @@ LOGIN_URL = 'chatbot:login'
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://13.234.198.68",
+    "http://13.234.198.68", "https://optimuminsights.ai"
 ]
