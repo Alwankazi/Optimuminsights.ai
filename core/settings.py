@@ -142,5 +142,5 @@ LOGIN_URL = 'chatbot:login'
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://13.234.198.68", "https://optimuminsights.ai"
+    "http://13.234.198.68", "https://optimuminsights.ai" , "http://optimuminsights.ai"
 ]
